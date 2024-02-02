@@ -456,7 +456,11 @@ public class LinkedFileViewModel extends AbstractViewModel {
                             destination,
                             databaseContext.getFileDirectories(preferencesService.getFilePreferences()),
                             preferencesService.getFilePreferences());
-                    entry.replaceDownloadedFile(linkedFile.getLink(), newLinkedFile);
+                    if (preferencesService.getFilePreferences().shouldKeepSourceUrlsAfterDownload()) {
+                        entry.addFile(0, newLinkedFile);
+                    } else {
+                        entry.replaceDownloadedFile(linkedFile.getLink(), newLinkedFile);
+                    }
 
                     // Notify in bar when the file type is HTML.
                     if (newLinkedFile.getFileType().equals(StandardExternalFileType.URL.getName())) {

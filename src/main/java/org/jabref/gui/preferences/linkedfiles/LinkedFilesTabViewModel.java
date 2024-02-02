@@ -36,6 +36,7 @@ public class LinkedFilesTabViewModel implements PreferenceTabViewModel {
     private final StringProperty autolinkRegexKeyProperty = new SimpleStringProperty("");
     private final ListProperty<String> defaultFileNamePatternsProperty =
             new SimpleListProperty<>(FXCollections.observableArrayList(FilePreferences.DEFAULT_FILENAME_PATTERNS));
+    private final BooleanProperty keepSourceUrlsAfterDownloadProperty = new SimpleBooleanProperty();
     private final BooleanProperty fulltextIndex = new SimpleBooleanProperty();
     private final StringProperty fileNamePatternProperty = new SimpleStringProperty();
     private final StringProperty fileDirectoryPatternProperty = new SimpleStringProperty();
@@ -77,6 +78,7 @@ public class LinkedFilesTabViewModel implements PreferenceTabViewModel {
         mainFileDirectoryProperty.setValue(filePreferences.getMainFileDirectory().orElse(Path.of("")).toString());
         useMainFileDirectoryProperty.setValue(!filePreferences.shouldStoreFilesRelativeToBibFile());
         useBibLocationAsPrimaryProperty.setValue(filePreferences.shouldStoreFilesRelativeToBibFile());
+        keepSourceUrlsAfterDownloadProperty.setValue(filePreferences.shouldKeepSourceUrlsAfterDownload());
         fulltextIndex.setValue(filePreferences.shouldFulltextIndexLinkedFiles());
         fileNamePatternProperty.setValue(filePreferences.getFileNamePattern());
         fileDirectoryPatternProperty.setValue(filePreferences.getFileDirectoryPattern());
@@ -98,6 +100,7 @@ public class LinkedFilesTabViewModel implements PreferenceTabViewModel {
         filePreferences.setStoreFilesRelativeToBibFile(useBibLocationAsPrimaryProperty.getValue());
         filePreferences.setFileNamePattern(fileNamePatternProperty.getValue());
         filePreferences.setFileDirectoryPattern(fileDirectoryPatternProperty.getValue());
+        filePreferences.setKeepSourceUrlsAfterDownload(keepSourceUrlsAfterDownloadProperty.getValue());
         filePreferences.setFulltextIndexLinkedFiles(fulltextIndex.getValue());
 
         // Autolink preferences
@@ -161,6 +164,10 @@ public class LinkedFilesTabViewModel implements PreferenceTabViewModel {
 
     public BooleanProperty fulltextIndexProperty() {
         return fulltextIndex;
+    }
+
+    public BooleanProperty keepSourceUrlsAfterDownloadProperty() {
+        return keepSourceUrlsAfterDownloadProperty;
     }
 
     public ListProperty<String> defaultFileNamePatternsProperty() {

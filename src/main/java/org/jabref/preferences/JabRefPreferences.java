@@ -336,6 +336,7 @@ public class JabRefPreferences implements PreferencesService {
     public static final String SEND_TIMEZONE_DATA = "sendTimezoneData";
     public static final String VALIDATE_IN_ENTRY_EDITOR = "validateInEntryEditor";
     public static final String SHOW_SCITE_TAB = "showSciteTab";
+    public static final String KEEP_SOURCE_URLS_AFTER_DOWNLOAD = "keepSourceUrlsAfterDownload";
 
     /**
      * The OpenOffice/LibreOffice connection preferences are: OO_PATH main directory for OO/LO installation, used to detect location on Win/macOS when using manual connect OO_EXECUTABLE_PATH path to soffice-file OO_JARS_PATH directory that contains juh.jar, jurt.jar, ridl.jar, unoil.jar OO_SYNC_WHEN_CITING true if the reference list is updated when adding a new citation OO_SHOW_PANEL true if the OO panel is shown on startup OO_USE_ALL_OPEN_DATABASES true if all databases should be used when citing OO_BIBLIOGRAPHY_STYLE_FILE path to the used style file OO_EXTERNAL_STYLE_FILES list with paths to external style files STYLES_*_* size and position of "Select style" dialog
@@ -769,6 +770,8 @@ public class JabRefPreferences implements PreferencesService {
         defaults.put(IMPORT_FILEDIRPATTERN, "");
         // Download files by default
         defaults.put(DOWNLOAD_LINKED_FILES, true);
+        // Delete source urls from entries by default
+        defaults.put(KEEP_SOURCE_URLS_AFTER_DOWNLOAD, false);
         // Create Fulltext-Index by default
         defaults.put(FULLTEXT_INDEX_LINKED_FILES, true);
 
@@ -2191,6 +2194,7 @@ public class JabRefPreferences implements PreferencesService {
                 get(IMPORT_FILENAMEPATTERN),
                 get(IMPORT_FILEDIRPATTERN),
                 getBoolean(DOWNLOAD_LINKED_FILES),
+                getBoolean(KEEP_SOURCE_URLS_AFTER_DOWNLOAD),
                 getBoolean(FULLTEXT_INDEX_LINKED_FILES),
                 Path.of(get(WORKING_DIRECTORY)),
                 ExternalFileTypes.fromString(get(EXTERNAL_FILE_TYPES)),
@@ -2203,6 +2207,7 @@ public class JabRefPreferences implements PreferencesService {
         EasyBind.listen(filePreferences.fileNamePatternProperty(), (obs, oldValue, newValue) -> put(IMPORT_FILENAMEPATTERN, newValue));
         EasyBind.listen(filePreferences.fileDirectoryPatternProperty(), (obs, oldValue, newValue) -> put(IMPORT_FILEDIRPATTERN, newValue));
         EasyBind.listen(filePreferences.downloadLinkedFilesProperty(), (obs, oldValue, newValue) -> putBoolean(DOWNLOAD_LINKED_FILES, newValue));
+        EasyBind.listen(filePreferences.keepSourceUrlsAfterDownloadProperty(), (obs, oldValue, newValue) -> putBoolean(KEEP_SOURCE_URLS_AFTER_DOWNLOAD, newValue));
         EasyBind.listen(filePreferences.fulltextIndexLinkedFilesProperty(), (obs, oldValue, newValue) -> putBoolean(FULLTEXT_INDEX_LINKED_FILES, newValue));
         EasyBind.listen(filePreferences.workingDirectoryProperty(), (obs, oldValue, newValue) -> put(WORKING_DIRECTORY, newValue.toString()));
         filePreferences.getExternalFileTypes().addListener((SetChangeListener<ExternalFileType>) c ->

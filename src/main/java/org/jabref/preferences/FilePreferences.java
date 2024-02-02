@@ -31,6 +31,7 @@ public class FilePreferences {
     private final StringProperty fileNamePattern = new SimpleStringProperty();
     private final StringProperty fileDirectoryPattern = new SimpleStringProperty();
     private final BooleanProperty downloadLinkedFiles = new SimpleBooleanProperty();
+    private final BooleanProperty keepSourceUrlsAfterDownload = new SimpleBooleanProperty();
     private final BooleanProperty fulltextIndexLinkedFiles = new SimpleBooleanProperty();
     private final ObjectProperty<Path> workingDirectory = new SimpleObjectProperty<>();
     private final ObservableSet<ExternalFileType> externalFileTypes = FXCollections.observableSet(new TreeSet<>(Comparator.comparing(ExternalFileType::getName)));
@@ -43,6 +44,7 @@ public class FilePreferences {
                            String fileNamePattern,
                            String fileDirectoryPattern,
                            boolean downloadLinkedFiles,
+                           boolean keepSourceUrlsAfterDownload,
                            boolean fulltextIndexLinkedFiles,
                            Path workingDirectory,
                            Set<ExternalFileType> externalFileTypes,
@@ -54,6 +56,7 @@ public class FilePreferences {
         this.fileNamePattern.setValue(fileNamePattern);
         this.fileDirectoryPattern.setValue(fileDirectoryPattern);
         this.downloadLinkedFiles.setValue(downloadLinkedFiles);
+        this.keepSourceUrlsAfterDownload.setValue(keepSourceUrlsAfterDownload);
         this.fulltextIndexLinkedFiles.setValue(fulltextIndexLinkedFiles);
         this.workingDirectory.setValue(workingDirectory);
         this.externalFileTypes.addAll(externalFileTypes);
@@ -127,6 +130,18 @@ public class FilePreferences {
 
     public void setDownloadLinkedFiles(boolean shouldDownloadLinkedFiles) {
         this.downloadLinkedFiles.set(shouldDownloadLinkedFiles);
+    }
+
+    public boolean shouldKeepSourceUrlsAfterDownload() {
+        return keepSourceUrlsAfterDownload.get();
+    }
+
+    public BooleanProperty keepSourceUrlsAfterDownloadProperty() {
+        return keepSourceUrlsAfterDownload;
+    }
+
+    public void setKeepSourceUrlsAfterDownload(boolean shouldKeepSourceUrlsAfterDownload) {
+        this.keepSourceUrlsAfterDownload.set(shouldKeepSourceUrlsAfterDownload);
     }
 
     public boolean shouldFulltextIndexLinkedFiles() {

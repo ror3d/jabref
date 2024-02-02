@@ -33,6 +33,8 @@ public class LinkedFilesTab extends AbstractPreferenceTabView<LinkedFilesTabView
     @FXML private RadioButton autolinkUseRegex;
     @FXML private TextField autolinkRegexKey;
 
+    @FXML private CheckBox keepSourceUrlsAfterDownload;
+
     @FXML private CheckBox fulltextIndex;
 
     @FXML private ComboBox<String> fileNamePattern;
@@ -65,6 +67,7 @@ public class LinkedFilesTab extends AbstractPreferenceTabView<LinkedFilesTabView
         autolinkUseRegex.selectedProperty().bindBidirectional(viewModel.autolinkUseRegexProperty());
         autolinkRegexKey.textProperty().bindBidirectional(viewModel.autolinkRegexKeyProperty());
         autolinkRegexKey.disableProperty().bind(autolinkUseRegex.selectedProperty().not());
+        keepSourceUrlsAfterDownload.selectedProperty().bindBidirectional(viewModel.keepSourceUrlsAfterDownloadProperty());
         fulltextIndex.selectedProperty().bindBidirectional(viewModel.fulltextIndexProperty());
         fileNamePattern.valueProperty().bindBidirectional(viewModel.fileNamePatternProperty());
         fileNamePattern.itemsProperty().bind(viewModel.defaultFileNamePatternsProperty());
