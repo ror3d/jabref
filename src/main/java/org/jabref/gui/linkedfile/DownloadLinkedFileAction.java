@@ -95,7 +95,7 @@ public class DownloadLinkedFileAction extends SimpleCommand {
     public void execute() {
         LOGGER.info("Downloading file from " + downloadUrl);
         if (downloadUrl.isEmpty() || !LinkedFile.isOnlineLink(downloadUrl)) {
-            throw new UnsupportedOperationException("In order to download the file, the url has to be an online link");
+            throw new UnsupportedOperationException("In order to download the file, the url has to be an online link, but found '" + downloadUrl + "' for entry " + entry.getId());
         }
 
         Optional<Path> targetDirectory = databaseContext.getFirstExistingFileDir(filePreferences);
